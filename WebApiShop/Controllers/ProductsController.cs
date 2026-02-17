@@ -19,11 +19,11 @@ namespace WebApiShop.Controllers
         }
         // GET: api/<CategoriesController>
         [HttpGet]
-        public async Task<ActionResult<PageResponseDTO<ProductDTO>>> Get( [FromQuery] int?[] categoryIds,string? description,int? maxPrice,int? minPrice, int skip = 8,int position=1)
+        public async Task<ActionResult<List<ProductDTO>>> Get( [FromQuery] int?[] categoryIds,string? description,int? maxPrice,int? minPrice, int skip = 8,int position=1)
         {
-            PageResponseDTO<ProductDTO> pageResponse = await _productService.GetProducts(position,skip,categoryIds, description, maxPrice,minPrice);
-            if (pageResponse.Data.Count() > 0)
-                return Ok(pageResponse);
+            List<ProductDTO> response = await _productService.GetProducts(position,skip,categoryIds, description, maxPrice,minPrice);
+            if (response.Count() > 0)
+                return Ok(response);
             return NoContent();
         }
         [HttpGet("{id}")]
@@ -46,7 +46,7 @@ namespace WebApiShop.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] ProductDTO updateProduct)
+        public async Task<IActionResult> Put(int id, [FromBody] PostProductDTO updateProduct)
         {
             await _productService.UpdateProduct(id, updateProduct);
             return NoContent();

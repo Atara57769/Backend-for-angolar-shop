@@ -15,7 +15,7 @@ namespace Repositories
         {
             _apiDbContext = apiDbContext;
         }
-        public async Task<(List<Product> Items, int TotalCount)> GetProducts(int position, int skip, int?[] categoryIds,
+        public async Task<List<Product>> GetProducts(int position, int skip, int?[] categoryIds,
             string? description,int?maxPrice,int?minPrice)
         {
             var query = _apiDbContext.Products.Where(product =>
@@ -24,12 +24,11 @@ namespace Repositories
                 ((minPrice == null) ? (true) : (product.Price >= minPrice)) &&
                 ((categoryIds.Length == 0) ? (true) : (categoryIds.Contains(product.CategoryId)))).OrderBy(product => product.Price);
             List<Product> products = await query.Skip((position-1)*skip).Take(skip).Include(product=>product.Category).ToListAsync();    
-            var total =await query.CountAsync();
-            return (products, total);
+            return products;
         }
         public async Task<Product> GetProductById(int id)
         {
-            return await _apiDbContext.Products.FindAsync(id);
+            return await _apiDbContext.Products.Include(product=>product.Category).FirstAsync(product=>product.Id==id);
         }
 
         public async Task<Product> AddProduct(Product newProduct)

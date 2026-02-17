@@ -21,28 +21,14 @@ namespace Services
             _productRepository = productRepository;
             _mapper = mapper;
         }
-        public async Task<PageResponseDTO<ProductDTO>> GetProducts(int position, int skip, int?[] categoryIds,
+        public async Task<List<ProductDTO>> GetProducts(int position, int skip, int?[] categoryIds,
             string? description, int? maxPrice, int? minPrice)
         {
 
-            var (items, totalItems) = await _productRepository.GetProducts(position,skip,categoryIds,description,maxPrice,minPrice);
-            List<ProductDTO> data = _mapper.Map<List<Product>, List<ProductDTO>>(items);
-            int numOfPages = totalItems / skip;
-            if (totalItems % skip != 0)
-                numOfPages++;
-
-            PageResponseDTO<ProductDTO> pageResponse =
-                new PageResponseDTO<ProductDTO>(
-                    data,
-                    totalItems,
-                    position,
-                    skip,
-                    position > 1,
-                    position < numOfPages
-                );
-
-            return pageResponse;
+            return _mapper.Map<List<Product>, List<ProductDTO>>(await _productRepository.GetProducts(position, skip, categoryIds,
+              description, maxPrice, minPrice));
         }
+
         public async Task<ProductDTO> GetProductById(int id)
         {
             return _mapper.Map<Product, ProductDTO>(await _productRepository.GetProductById(id));
@@ -52,9 +38,9 @@ namespace Services
             return _mapper.Map<Product, ProductDTO>(await _productRepository.AddProduct(_mapper.Map<PostProductDTO, Product>(product)));
         }
 
-        public async Task UpdateProduct(int id, ProductDTO product)
+        public async Task UpdateProduct(int id, PostProductDTO product)
         {
-            await _productRepository.UpdateProduct(id, _mapper.Map<ProductDTO, Product>(product));
+            await _productRepository.UpdateProduct(id, _mapper.Map<PostProductDTO, Product>(product));
         }
     }
 }
