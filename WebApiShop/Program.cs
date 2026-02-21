@@ -21,7 +21,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
 builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 builder.Services.AddDbContext<ApiDBContext>
-    (options => options.UseSqlServer(builder.Configuration.GetConnectionString("Home")));
+    (options => options.UseSqlServer(builder.Configuration.GetConnectionString("Yael")));
 // Add services to the container.
 builder.Host.UseNLog();
 builder.Services.AddControllers();
@@ -61,5 +61,7 @@ app.UseCors("AllowAngular");
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapFallbackToFile("home.html");
 
 app.Run();

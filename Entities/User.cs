@@ -21,7 +21,7 @@ public partial class User
 
     public string Password { get; set; }
 
-    public bool? IsAdmin { get; set; }
+    public bool? IsAdmin { get; set; } = false;
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }

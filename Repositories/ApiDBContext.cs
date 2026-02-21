@@ -18,7 +18,6 @@ public partial class ApiDBContext : DbContext
     }
 
 
-
     public virtual DbSet<Category> Categories { get; set; }
 
     public virtual DbSet<Order> Orders { get; set; }
