@@ -19,7 +19,7 @@ namespace WebApiShop.Controllers
         }
         // GET: api/<CategoriesController>
         [HttpGet]
-        public async Task<ActionResult<List<ProductDTO>>> Get( [FromQuery] int?[] categoryIds,string? description,int? maxPrice,int? minPrice, int skip = 8,int position=1)
+        public async Task<ActionResult<List<ProductDTO>>> Get( [FromQuery] int?[] categoryIds,string? description,int? maxPrice,int? minPrice, int skip = 100,int position=1)
         {
             List<ProductDTO> response = await _productService.GetProducts(position,skip,categoryIds, description, maxPrice,minPrice);
             if (response.Count() > 0)

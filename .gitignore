@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 
 repositories/users.txt
+
+/WebApiShop/wwwroot/images/
