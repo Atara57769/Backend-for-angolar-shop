@@ -365,3 +365,4 @@ FodyWeavers.xsd
 repositories/users.txt
 
 /WebApiShop/wwwroot/images/
+*internal-nlog-AspNetCore.txt
