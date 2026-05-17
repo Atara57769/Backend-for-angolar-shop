@@ -28,16 +28,8 @@ builder.Services.AddDbContext<ApiDBContext>
 builder.Host.UseNLog();
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAngular",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:4200")
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
-});
+builder.Services.AddCors(o => o.AddDefaultPolicy(
+    p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
 builder.Services.AddOpenApi();
 var app = builder.Build();
@@ -59,7 +51,7 @@ app.UseErrorHandling();
 
 app.UseStaticFiles();
 
-app.UseCors("AllowAngular");
+app.UseCors();
 
 app.UseAuthorization();
 

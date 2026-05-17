@@ -17,12 +17,13 @@ namespace WebApiShop.Controllers
             _chatBotService = chatBotService;
         }
 
+        [HttpPost]
         [HttpPost("ask")]
-        public async Task<IActionResult> Ask([FromBody] ChatBotRequest request)
+        public async Task<IActionResult> Post([FromBody] ChatBotRequest request)
         {
-            if (request == null || string.IsNullOrWhiteSpace(request.Question))
+            if (request == null || string.IsNullOrWhiteSpace(request.Message))
             {
-                return BadRequest(new { message = "Question is required." });
+                return BadRequest(new { message = "Message is required." });
             }
 
             try
@@ -38,3 +39,4 @@ namespace WebApiShop.Controllers
         }
     }
 }
+

@@ -1,10 +1,10 @@
-using System.Text.Json.Serialization;
+using System.Collections.Generic;
 
 namespace Entities
 {
-    public class ChatBotRequest
-    {
-        [JsonPropertyName("question")]
-        public string? Question { get; set; }
-    }
+    public record ChatBotRequest(
+        string Message,
+        List<HistoryItem> History,
+        List<object> Products);
 }
+
