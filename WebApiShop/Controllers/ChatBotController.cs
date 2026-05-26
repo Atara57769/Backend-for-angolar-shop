@@ -37,6 +37,24 @@ namespace WebApiShop.Controllers
                 return StatusCode(500, new { message = "Error communicating with the RAG API.", details = ex.Message });
             }
         }
+
+        [HttpPost("update-db")]
+        public async Task<IActionResult> UpdateDatabase()
+        {
+            try
+            {
+                var success = await _chatBotService.UpdateDatabaseAsync();
+                if (success)
+                {
+                    return Ok(new { message = "Vector database updated successfully." });
+                }
+                return StatusCode(500, new { message = "Failed to update vector database." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error communicating with the Python service.", details = ex.Message });
+            }
+        }
     }
 }
 

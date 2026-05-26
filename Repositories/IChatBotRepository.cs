@@ -6,5 +6,7 @@ namespace Repositories
     public interface IChatBotRepository
     {
         Task<ChatBotResponse> AskQuestionAsync(ChatBotRequest request);
+        Task<bool> UpdateDatabaseAsync();
+        Task<bool> SyncProductsAsync(List<Product> products);
     }
 }

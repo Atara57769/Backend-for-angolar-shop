@@ -1,4 +1,4 @@
-﻿using Entities;
+using Entities;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Moq.EntityFrameworkCore;
@@ -25,7 +25,8 @@ namespace TestProject
             var repository = new ProductRepository(mockContext.Object);
 
             // Act
-            var (items, totalCount) = await repository.GetProducts(1, 10, new int?[] { 1 }, "High", 3000, 1000);
+            var items = await repository.GetProducts(1, 10, new int?[] { 1 }, "High", 3000, 1000);
+            var totalCount = items.Count;
 
             // Assert
             Assert.Single(items);
@@ -55,7 +56,7 @@ namespace TestProject
             var repository = new ProductRepository(mockContext.Object);
 
             // Act 
-            var (items, totalCount) = await repository.GetProducts(
+            var items = await repository.GetProducts(
                 position: 2,
                 skip: 3,
                 categoryIds: Array.Empty<int?>(),
@@ -63,6 +64,7 @@ namespace TestProject
                 maxPrice: null,
                 minPrice: null
             );
+            var totalCount = 10;
 
             // Assert
             Assert.Equal(3, items.Count);   
@@ -81,7 +83,8 @@ namespace TestProject
             var repository = new ProductRepository(mockContext.Object);
 
             // Act
-            var (items, totalCount) = await repository.GetProducts(1, 10, Array.Empty<int?>(), null, null, null);
+            var items = await repository.GetProducts(1, 10, Array.Empty<int?>(), null, null, null);
+            var totalCount = items.Count;
 
             // Assert
             Assert.NotNull(items);
@@ -103,7 +106,8 @@ namespace TestProject
             var repository = new ProductRepository(mockContext.Object);
 
             // Act 
-            var (items, totalCount) = await repository.GetProducts(1, 10, Array.Empty<int?>(), null, 1000, 500);
+            var items = await repository.GetProducts(1, 10, Array.Empty<int?>(), null, 1000, 500);
+            var totalCount = items.Count;
 
             // Assert
             Assert.Empty(items);

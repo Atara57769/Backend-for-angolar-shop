@@ -1,4 +1,4 @@
-﻿using Entities;
+using Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -42,6 +42,14 @@ namespace Repositories
         {
             _apiDbContext.Products.Update(updateProduct);
             await _apiDbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<Product>> GetAllAvailableProductsAsync()
+        {
+            return await _apiDbContext.Products
+                .Where(p => p.IsAvailable)
+                .Include(p => p.Category)
+                .ToListAsync();
         }
 
     }

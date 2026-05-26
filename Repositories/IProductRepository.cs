@@ -1,4 +1,4 @@
-﻿using Entities;
+using Entities;
 
 namespace Repositories
 {
@@ -9,9 +9,6 @@ namespace Repositories
         public Task<Product> GetProductById(int id);
         public Task<Product> AddProduct(Product newProduct);
         public Task UpdateProduct(int id, Product updateProduct);
-
-
-
-
+        public Task<List<Product>> GetAllAvailableProductsAsync();
     }
 }

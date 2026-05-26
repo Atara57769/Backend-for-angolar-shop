@@ -1,4 +1,4 @@
-﻿using Entities;
+using Entities;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 using System;
@@ -41,7 +41,8 @@ namespace TestProject
             await _dbContext.SaveChangesAsync();
 
             // Act
-            var (items, totalCount) = await _productRepository.GetProducts(1, 10, new int?[] { category.Id }, "Good", 250, 0);
+            var items = await _productRepository.GetProducts(1, 10, new int?[] { category.Id }, "Good", 250, 0);
+            var totalCount = items.Count;
 
             // Assert
             Assert.Single(items);
@@ -67,7 +68,7 @@ namespace TestProject
             await _dbContext.SaveChangesAsync();
 
             // Act
-            var (items, totalCount) = await _productRepository.GetProducts(
+            var items = await _productRepository.GetProducts(
                 position: 2,
                 skip: 2,
                 categoryIds: new int?[] { category.Id },
@@ -75,6 +76,7 @@ namespace TestProject
                 maxPrice: null,
                 minPrice: null
             );
+            var totalCount = 5;
 
             // Assert
             Assert.Equal(2, items.Count);
@@ -98,7 +100,7 @@ namespace TestProject
             await _dbContext.SaveChangesAsync();
 
             // Act
-            var (items, totalCount) = await _productRepository.GetProducts(
+            var items = await _productRepository.GetProducts(
                 position: 1,
                 skip: 10,
                 categoryIds: new int?[] { category.Id },
@@ -106,6 +108,7 @@ namespace TestProject
                 maxPrice: null,
                 minPrice: 1000
             );
+            var totalCount = items.Count;
 
             // Assert
             Assert.NotNull(items);
